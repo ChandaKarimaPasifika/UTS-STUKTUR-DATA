@@ -2,7 +2,6 @@ import pandas as pd
 import re
 from pandas.api import types as ptypes
 
-# Fungsi untuk membaca file Excel dan mengambil hanya kolom yang diperlukan
 def baca_data_excel(path):
     try:
         data = pd.read_excel(path, header=0)
@@ -15,7 +14,6 @@ def baca_data_excel(path):
         print(f"Gagal membaca file Excel: {e}")
         return None
 
-# Fungsi normalisasi teks (untuk pencarian robust)
 def normalize_text(text):
     if pd.isnull(text):
         return ""
@@ -24,12 +22,10 @@ def normalize_text(text):
     text = re.sub(r'\s+', ' ', text)  # Ganti spasi berlebihan
     return text.strip()
 
-# Linear Search
 def linear_search(data, kolom, keyword):
     keyword_norm = normalize_text(keyword)
     return data[data[kolom].apply(lambda x: keyword_norm in normalize_text(x))]
 
-# Binary Search
 def binary_search(data, kolom, keyword):
     data_sorted = data.sort_values(by=kolom, ascending=True).reset_index(drop=True)
     hasil = pd.DataFrame(columns=data.columns)
